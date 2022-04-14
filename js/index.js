@@ -24,7 +24,6 @@
       const navCatalog = document.querySelector("#navCatalog");
       const navTop = document.querySelector(".nav").getBoundingClientRect().top;
 
-      console.log(navTop);
       navCatalog.classList.toggle("show");
       navCatalog.style.top = `${
         document.querySelector(".nav").getBoundingClientRect().top
