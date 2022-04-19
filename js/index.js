@@ -1,13 +1,13 @@
 (function () {
   window.addEventListener("DOMContentLoaded", function () {
     let menuRootEl = document.querySelector(".nav-catalog_list ul");
-
+    
     const resInfo = menuAim(menuRootEl, {
       activate: activateSubmenu,
       deactivate: deactivateSubmenu,
       activeRow: document.querySelector('[data-submenu-id="sm1"]'),
     });
-
+    
     function overlayToggle() {
       const overlayEl = document.querySelector(".overlay");
       overlayEl.classList.toggle("show");
@@ -23,11 +23,10 @@
       event.target.querySelector(".icon-menu").classList.toggle("open");
       const navCatalog = document.querySelector("#navCatalog");
       const navTop = document.querySelector(".nav").getBoundingClientRect().top;
+      const navHeight = document.querySelector(".nav").getBoundingClientRect().height;
 
       navCatalog.classList.toggle("show");
-      navCatalog.style.top = `${
-        document.querySelector(".nav").getBoundingClientRect().top
-      }px`;
+      navCatalog.style.top = `${navTop + navHeight}px`;
 
       overlayToggle();
     }
@@ -51,6 +50,7 @@
         display: "none",
       };
       if (submenu) Object.assign(submenu.style, styles);
+      [...submenu.querySelectorAll('.sub-expand.open')].forEach(span => span.click())
       row.classList.remove("show");
     }
 
@@ -68,15 +68,20 @@
       }
     });
 
-    function addExpandButton() {
+    function addExpandButton(prevSubmenu) {
       const arrListSubcatalog = document.querySelectorAll(
         ".nav-catalog_sub-list"
       );
 
       arrListSubcatalog.forEach((list) => {
         const listArr = [...list.children];
-
+        const lastItem = listArr[listArr.length - 1];
+        
         if (listArr.length > 5) {
+          const isExpand = lastItem.children[0].classList.contains('sub-expand')
+          
+          if (isExpand) return false;
+          
           let stopItem = listArr[4];
           listArr.forEach(() => {
             stopItem.dataset.hideNext = "";
@@ -94,7 +99,7 @@
             let target = event.target;
             target.classList.toggle("open");
             stopItem.toggleAttribute("data-hide-next");
-            if (target.textContent === "Еще") {
+            if (target.classList.contains('open')) {
               target.textContent = "Свернуть";
             } else {
               target.textContent = "Еще";

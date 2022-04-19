@@ -101,11 +101,15 @@
 }
 .action-buttons_name {
   padding: 0 5px;
+  position: relative;
 }
 
 /* NAVIGATION (FAST LINKS) */
 .nav {
+  position: relative;
+  background-color: #fff;
   box-shadow: 0 2px 3px 0 rgb(0 0 0 / 6%);
+  z-index: 2001;
 }
 .nav_list {
   display: flex;
@@ -161,6 +165,7 @@
   color: #ff7f1c;
 }
 .nav_list .btn-catalog {
+  font-size: 16px;
   background: none;
   padding: 0;
   outline: none;
